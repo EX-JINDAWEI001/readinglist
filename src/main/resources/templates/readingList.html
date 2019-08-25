@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>Reading List</title>
+<link rel="stylesheet" th:href="@{/style.css}"></link>
+</head>
+<body>
+	<h2>Your Reading List</h2>
+	<div th:unless="${#lists.isEmpty(books)}">
+		<dl th:each="book:${books}">
+			<dt class="bookHeadline">
+				<a th:href="'http://www.zmazon.com/gp/product/'
+							+${book.isbn}
+							+'/tag=' + ${amazonId}"
+					th:text="${book.title}">Title
+				</a>
+				<span th:text="${book.title}">Title</span> by
+				<span th:text="${book.author}">Author</span>
+				(ISBN:<span th:text="${book.isbn}">ISBN</span>)
+			</dt>
+			<dd class="bookDescription">
+				<span th:if="${book.description}" th:text="${book.description}">Description</span>
+				<span th:if="${book.description eq null}">no description available</span>
+			</dd>
+		</dl>
+	</div>
+	
+	<hr/>
+	
+	<h3>add a book</h3>
+	<form action="/addToReadingList.do" method="GET">
+		<lable for="title">Title:</lable>
+		<input type="text" name="title" size="50"/><br/>
+		<lable for="author">Author:</lable>
+		<input type="text" name="author" size="50"/><br/>
+		<lable for="isbn">ISBN:</lable>
+		<input type="text" name="isbn" size="15"/><br/>
+		<lable for="description">Description:</lable>
+		<textarea name="description" cols="80" rows="5"/><br/>
+		<input type="submit"/>
+	</form>
+</body>
+</html>
